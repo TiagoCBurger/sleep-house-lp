@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { ConciergeForm } from "./components/ConciergeForm";
 import { SiteHeader } from "./components/SiteHeader";
 import { LuxuryMotion } from "./components/LuxuryMotion";
 
@@ -115,73 +117,6 @@ function SolidButton({
     <button className={`${base} ${className}`} data-lux-button>
       {children}
     </button>
-  );
-}
-
-function EditorialPlaceholder({
-  size = "small",
-  title,
-  subtitle,
-}: {
-  size?: "small" | "large";
-  title: string;
-  subtitle: string;
-}) {
-  const iconSize = size === "small" ? "size-7" : "size-9";
-  const frameSize = size === "small" ? "size-[72px]" : "size-[36px]";
-  const labelColor =
-    size === "small" ? "text-[#f5f0e8]/20" : "text-[#8a8278]";
-
-  return (
-    <div className="flex flex-col items-center gap-4">
-      {size === "small" ? (
-        <div className="flex size-[72px] items-center justify-center border border-[#c4a962]/25 p-px">
-          <div className={`relative ${iconSize}`}>
-            <div className="absolute inset-0 border border-[#c4a962]/40" />
-            <div className="absolute left-1/2 top-1/2 size-2 -translate-x-1/2 -translate-y-1/2 border border-[#c4a962]/40" />
-          </div>
-        </div>
-      ) : (
-        <div className={`relative ${frameSize}`}>
-          <div className="absolute inset-0 border border-[#8a8278]" />
-          <div className="absolute left-1/2 top-1/2 size-2 -translate-x-1/2 -translate-y-1/2 border border-[#8a8278]" />
-        </div>
-      )}
-      <div className="flex flex-col items-center gap-1 text-center">
-        <span
-          className={`text-[10px] font-light uppercase tracking-[0.14em] ${labelColor}`}
-        >
-          {title}
-        </span>
-        <span
-          className={`text-[9px] font-light uppercase tracking-[0.14em] ${labelColor} ${
-            size === "small" ? "opacity-50" : "opacity-60"
-          }`}
-        >
-          {subtitle}
-        </span>
-      </div>
-    </div>
-  );
-}
-
-function FormField({
-  label,
-  placeholder,
-}: {
-  label: string;
-  placeholder: string;
-}) {
-  return (
-    <label className="flex flex-col gap-3">
-      <span className="text-[9px] font-light uppercase tracking-[0.18em] text-[#f5f0e8]/30">
-        {label}
-      </span>
-      <input
-        className="h-12 border-b border-[#f5f0e8]/15 bg-transparent pb-3 text-base italic text-[#f5f0e8] outline-none placeholder:text-[#f5f0e8]/20"
-        placeholder={placeholder}
-      />
-    </label>
   );
 }
 
@@ -303,11 +238,14 @@ export default function Home() {
                 data-reveal
                 data-lux-media
               >
-                <div className="flex aspect-[4/5] items-center justify-center bg-[#eae3d5]">
-                  <EditorialPlaceholder
-                    size="large"
-                    title="Detalhe Artesanal"
-                    subtitle="Tufting / Tecido de Alfaiataria"
+                <div className="relative aspect-[4/5] overflow-hidden bg-[#eae3d5]">
+                  <Image
+                    src="/Foco na textura.png"
+                    alt="Detalhe da textura e do tufting artesanal do colchão Dédicace Paris"
+                    fill
+                    sizes="(min-width: 1024px) 540px, calc(100vw - 48px)"
+                    className="object-cover"
+                    loading="lazy"
                   />
                 </div>
 
@@ -428,11 +366,14 @@ export default function Home() {
                 >
                   Para arquitetos e designers
                 </div>
-                <div className="flex aspect-square items-center justify-center bg-[#eae3d5]">
-                  <EditorialPlaceholder
-                    size="large"
-                    title="Referência de Projeto"
-                    subtitle="Suite Master / Dormitório Principal"
+                <div className="relative aspect-[16/10] overflow-hidden bg-[#eae3d5] lg:aspect-square">
+                  <Image
+                    src="/colchão-em-quarto.png"
+                    alt="Colchão Dédicace Paris em uma suíte master de alto padrão"
+                    fill
+                    sizes="(min-width: 1024px) 540px, calc(100vw - 48px)"
+                    className="object-cover"
+                    loading="lazy"
                   />
                 </div>
               </div>
@@ -533,43 +474,7 @@ export default function Home() {
                 className="w-full border border-[#c4a962]/12 px-6 py-8 sm:px-10 sm:py-10 lg:px-12 lg:py-12"
                 data-reveal
               >
-                <form className="flex flex-col gap-8">
-                  <FormField label="Nome completo" placeholder="Seu nome" />
-                  <FormField label="WhatsApp" placeholder="(00) 00000-0000" />
-
-                  <fieldset className="border-0 p-0">
-                    <legend className="mb-4 text-[9px] font-light uppercase tracking-[0.18em] text-[#f5f0e8]/30">
-                      Perfil
-                    </legend>
-                    <div className="space-y-3.5">
-                      <label className="flex cursor-pointer items-center gap-3.5 text-sm font-light text-[#f5f0e8]/65">
-                        <input
-                          type="radio"
-                          name="perfil"
-                          className="size-[18px] shrink-0 appearance-none rounded-none border border-[#c4a962]/40 bg-transparent checked:border-[#c4a962] checked:bg-[radial-gradient(circle_at_center,_#c4a962_0,_#c4a962_35%,_transparent_38%)]"
-                        />
-                        <span>Sou Cliente Final</span>
-                      </label>
-                      <label className="flex cursor-pointer items-center gap-3.5 text-sm font-light text-[#f5f0e8]/65">
-                        <input
-                          type="radio"
-                          name="perfil"
-                          className="size-[18px] shrink-0 appearance-none rounded-none border border-[#c4a962]/40 bg-transparent checked:border-[#c4a962] checked:bg-[radial-gradient(circle_at_center,_#c4a962_0,_#c4a962_35%,_transparent_38%)]"
-                        />
-                        <span>Sou Arquiteto ou Designer</span>
-                      </label>
-                    </div>
-                  </fieldset>
-
-                  <div className="pt-2">
-                    <SolidButton className="flex w-full justify-center">
-                      Falar com o Concierge
-                    </SolidButton>
-                    <p className="mt-4 text-center text-[11px] font-light tracking-[0.04em] text-[#f5f0e8]/20">
-                      Atendimento personalizado · Sem compromisso de compra
-                    </p>
-                  </div>
-                </form>
+                <ConciergeForm />
               </div>
             </div>
           </SectionContainer>
