@@ -1,8 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
-type FormStatus = "idle" | "sending" | "success" | "error";
+type FormStatus = "idle" | "sending" | "error";
 
 const profileOptions = [
   "Sou Cliente Final",
@@ -36,6 +37,7 @@ function FieldError({ children }: { children?: string }) {
 }
 
 export function ConciergeForm() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [profile, setProfile] = useState("");
@@ -90,11 +92,7 @@ export function ConciergeForm() {
         throw new Error("Webhook request failed");
       }
 
-      setStatus("success");
-      setName("");
-      setWhatsapp("");
-      setProfile("");
-      setErrors({});
+      router.push("/obrigado");
     } catch {
       setStatus("error");
     }
@@ -176,12 +174,6 @@ export function ConciergeForm() {
         <p className="mt-4 text-center text-[11px] font-light tracking-[0.04em] text-[#f5f0e8]/20">
           Atendimento personalizado · Sem compromisso de compra
         </p>
-
-        {status === "success" && (
-          <p className="mt-4 text-center text-[12px] font-light leading-[1.6] tracking-[0.04em] text-[#c4a962]">
-            Dados enviados. Nosso time entrará em contato.
-          </p>
-        )}
 
         {status === "error" && (
           <p className="mt-4 text-center text-[12px] font-light leading-[1.6] tracking-[0.04em] text-[#d4b872]">
