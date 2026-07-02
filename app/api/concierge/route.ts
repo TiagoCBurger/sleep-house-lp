@@ -13,12 +13,14 @@ function isValidPayload(payload: Record<string, unknown>) {
     "",
   );
   const perfil = String(payload.perfil ?? "").trim();
+  const lojaPreferencia = String(payload.loja_preferencia ?? "").trim();
 
   return (
     nome.length >= 2 &&
     whatsappDigits.length >= 10 &&
     whatsappDigits.length <= 11 &&
-    perfil.length > 0
+    perfil.length > 0 &&
+    lojaPreferencia.length > 0
   );
 }
 

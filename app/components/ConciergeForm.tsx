@@ -10,6 +10,8 @@ const profileOptions = [
   "Sou Arquiteto ou Designer",
 ] as const;
 
+const storeOptions = ["Americana", "Piracicaba"] as const;
+
 function onlyDigits(value: string) {
   return value.replace(/\D/g, "");
 }
@@ -41,6 +43,7 @@ export function ConciergeForm() {
   const [name, setName] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [profile, setProfile] = useState("");
+  const [store, setStore] = useState("");
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -58,6 +61,10 @@ export function ConciergeForm() {
 
     if (!profile) {
       nextErrors.profile = "Selecione o seu perfil.";
+    }
+
+    if (!store) {
+      nextErrors.store = "Selecione a loja de preferência.";
     }
 
     setErrors(nextErrors);
@@ -83,6 +90,7 @@ export function ConciergeForm() {
           whatsapp,
           whatsapp_digits: onlyDigits(whatsapp),
           perfil: profile,
+          loja_preferencia: store,
           origem: "Landing Page Sleep House Dedicace Paris",
           pagina: window.location.href,
         }),
@@ -160,6 +168,29 @@ export function ConciergeForm() {
           <FieldError>{errors.profile}</FieldError>
         </div>
       </fieldset>
+
+      <label className="flex flex-col gap-3">
+        <span className="text-[9px] font-light uppercase tracking-[0.18em] text-[#f5f0e8]/30">
+          Loja de preferência
+        </span>
+        <select
+          className="h-12 border-b border-[#f5f0e8]/15 bg-[#0a0a0a] pb-3 text-base italic text-[#f5f0e8] outline-none"
+          name="loja_preferencia"
+          value={store}
+          onChange={(event) => setStore(event.target.value)}
+          aria-invalid={Boolean(errors.store)}
+        >
+          <option value="" disabled>
+            Selecione uma loja
+          </option>
+          {storeOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+        <FieldError>{errors.store}</FieldError>
+      </label>
 
       <div className="pt-2">
         <button
