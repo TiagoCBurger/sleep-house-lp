@@ -131,9 +131,9 @@ export default function Home() {
           id="hero"
           className="relative grid min-h-[100svh] grid-cols-1 xl:grid-cols-2"
         >
-          <div className="flex min-h-[100svh] flex-col justify-center bg-[#0a0a0a] px-6 pb-16 pt-28 sm:px-10 lg:px-16 xl:px-12 2xl:px-[48px]">
+          <div className="flex min-h-[calc(100svh-72px)] flex-col justify-center bg-[#0a0a0a] px-6 pb-10 pt-24 sm:min-h-[calc(100svh-80px)] sm:px-10 sm:pb-12 sm:pt-26 lg:min-h-[calc(100svh-88px)] lg:px-16 lg:pb-14 xl:px-12 2xl:px-[48px]">
             <div className="w-full max-w-[848px]">
-              <div className="mb-10 flex items-center gap-4" data-hero-reveal>
+              <div className="mb-6 flex items-center gap-3 sm:mb-8 sm:gap-4" data-hero-reveal>
                 <GoldRule />
                 <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-[#c4a962]">
                   Dédicace Paris · Belleville
@@ -141,18 +141,18 @@ export default function Home() {
               </div>
 
               <h1
-                className="max-w-[848px] font-display text-[52px] leading-[0.98] tracking-[-0.03em] text-[#f5f0e8] sm:text-[64px] xl:text-[76px]"
+                className="max-w-[848px] font-display text-[42px] leading-[0.94] tracking-[-0.035em] text-[#f5f0e8] sm:text-[52px] lg:text-[58px] xl:text-[64px] 2xl:text-[68px]"
                 data-hero-reveal
               >
-                <span className="block max-w-[420px]">Alta costura</span>
-                <span className="block max-w-[420px]">francesa.</span>
-                <em className="mt-[2px] block not-italic text-[#c4a962]">
+                <span className="block max-w-[360px] sm:max-w-[420px]">Alta costura</span>
+                <span className="block max-w-[360px] sm:max-w-[420px]">francesa.</span>
+                <em className="mt-1 block not-italic text-[#c4a962]">
                   Para onde você dorme.
                 </em>
               </h1>
 
               <div
-                className="mt-10 flex max-w-[480px] flex-col gap-6 text-[15px] font-light leading-[1.8] text-[#f5f0e8]/45"
+                className="mt-6 flex max-w-[460px] flex-col gap-4 text-[14px] font-light leading-[1.65] text-[#f5f0e8]/45 sm:mt-8 sm:gap-5"
                 data-hero-reveal
               >
                 {heroParagraphs.map((paragraph) => (
@@ -160,17 +160,17 @@ export default function Home() {
                 ))}
               </div>
 
-              <div className="mt-12 flex flex-wrap gap-4" data-hero-reveal>
-                <SolidButton href="#concierge" className="min-w-[240px]">
+              <div className="mt-8 flex flex-wrap gap-3 sm:mt-10 sm:gap-4" data-hero-reveal>
+                <SolidButton href="#concierge" className="min-w-[220px]">
                   Falar com o Concierge
                 </SolidButton>
-                <OutlineButton href="#arquitetos" className="min-w-[260px]">
+                <OutlineButton href="#arquitetos" className="min-w-[220px]">
                   Especificar no meu Projeto
                 </OutlineButton>
               </div>
 
               <p
-                className="mt-4 text-[11px] font-light tracking-[0.06em] text-[#f5f0e8]/30"
+                className="mt-3 max-w-[520px] text-[10px] font-light leading-[1.5] tracking-[0.05em] text-[#f5f0e8]/30 sm:mt-4 sm:text-[11px]"
                 data-hero-reveal
               >
                 Atendimento exclusivo por agendamento · Showroom em Americana e
@@ -328,18 +328,22 @@ export default function Home() {
                   &ldquo;
                 </div>
                 <p className="mt-2 text-[15px] font-light italic leading-[1.85] text-[#f5f0e8]/55">
-                  &quot;Texto do depoimento a inserir após validação com o
-                  cliente. Preferencialmente um arquiteto ou cliente de alto
-                  padrão que já especificou o produto.&quot;
+                  A Sleep House Colchões - Americana está de parabéns, tanto
+                  pelo excelente atendimento quanto pelos produtos
+                  comercializados. A equipe é altamente preparada para atender
+                  os clientes, dominam o assunto, passando confiança e
+                  segurança na hora da compra. Além disso, a entrega foi super
+                  rápida. Estou satisfeito. Muito obrigado! Recomendo a loja
+                  Sleep House Colchões - Americana.
                 </p>
                 <div className="mt-8 flex items-center gap-4">
                   <div className="size-10 shrink-0 rounded-full border border-[#f5f0e8]/20" />
                   <div className="flex flex-col gap-0.5">
                     <span className="text-[12px] font-light text-[#f5f0e8]/80">
-                      Nome do cliente ou arquiteto
+                      B. A.
                     </span>
                     <span className="text-[11px] font-light text-[#f5f0e8]/35">
-                      Profissão · Cidade
+                      5 estrelas no Google · Americana
                     </span>
                   </div>
                 </div>
