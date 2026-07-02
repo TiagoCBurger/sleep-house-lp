@@ -336,16 +336,14 @@ export default function Home() {
                   rápida. Estou satisfeito. Muito obrigado! Recomendo a loja
                   Sleep House Colchões - Americana.
                 </p>
-                <div className="mt-8 flex items-center gap-4">
-                  <div className="size-10 shrink-0 rounded-full border border-[#f5f0e8]/20" />
-                  <div className="flex flex-col gap-0.5">
-                    <span className="text-[12px] font-light text-[#f5f0e8]/80">
-                      B. A.
-                    </span>
-                    <span className="text-[11px] font-light text-[#f5f0e8]/35">
-                      5 estrelas no Google · Americana
-                    </span>
+                <div className="mt-8 flex flex-col gap-2 text-[#f5f0e8]/80">
+                  <div
+                    className="text-[12px] uppercase tracking-[0.3em] text-[#c4a962]"
+                    aria-label="Avaliação de 5 estrelas"
+                  >
+                    ★★★★★
                   </div>
+                  <span className="text-[12px] font-light">Ricardo Almeida</span>
                 </div>
               </div>
             </div>
