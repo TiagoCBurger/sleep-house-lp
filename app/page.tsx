@@ -1,4 +1,7 @@
 import Image from "next/image";
+import heroPoster from "@/public/Belleville-hero.jpg";
+import bedroomImage from "@/public/colchão-em-quarto.png";
+import textureImage from "@/public/Foco na textura.png";
 import { ConciergeForm } from "./components/ConciergeForm";
 import { SiteHeader } from "./components/SiteHeader";
 import { LuxuryMotion } from "./components/LuxuryMotion";
@@ -190,17 +193,30 @@ export default function Home() {
                   "repeating-linear-gradient(0deg, rgba(196,169,98,0.04) 0, rgba(196,169,98,0.04) 1px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, rgba(196,169,98,0.04) 0, rgba(196,169,98,0.04) 1px, transparent 1px, transparent 40px)",
               }}
             />
+            <Image
+              src={heroPoster}
+              alt="Colchão Dédicace Paris em ambiente sofisticado"
+              fill
+              priority
+              fetchPriority="high"
+              placeholder="blur"
+              sizes="(min-width: 1280px) 50vw, 100vw"
+              className="object-cover"
+            />
             <video
               className="absolute inset-0 h-full w-full object-cover"
               autoPlay
               loop
               muted
               playsInline
-              preload="metadata"
-              poster="/Belleville-hero.jpg"
+              preload="none"
               aria-hidden="true"
             >
-              <source src="/Belleville-hero.mp4" type="video/mp4" />
+              <source
+                src="/Belleville-hero.mp4"
+                type="video/mp4"
+                media="(min-width: 1024px)"
+              />
             </video>
             <div className="absolute inset-0 bg-[#141414]/10" />
           </div>
@@ -240,12 +256,12 @@ export default function Home() {
               >
                 <div className="relative aspect-[4/5] overflow-hidden bg-[#eae3d5]">
                   <Image
-                    src="/Foco na textura.png"
+                    src={textureImage}
                     alt="Detalhe da textura e do tufting artesanal do colchão Dédicace Paris"
                     fill
                     sizes="(min-width: 1024px) 540px, calc(100vw - 48px)"
                     className="object-cover"
-                    loading="lazy"
+                    placeholder="blur"
                   />
                 </div>
 
@@ -370,12 +386,12 @@ export default function Home() {
                 </div>
                 <div className="relative aspect-[16/10] overflow-hidden bg-[#eae3d5] lg:aspect-square">
                   <Image
-                    src="/colchão-em-quarto.png"
+                    src={bedroomImage}
                     alt="Colchão Dédicace Paris em uma suíte master de alto padrão"
                     fill
-                    sizes="(min-width: 1024px) 540px, calc(100vw - 48px)"
+                    sizes="(min-width: 1024px) 540px, (min-width: 640px) calc(100vw - 80px), calc(100vw - 48px)"
                     className="object-cover"
-                    loading="lazy"
+                    placeholder="blur"
                   />
                 </div>
               </div>

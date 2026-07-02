@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import logo from "@/public/logo.svg";
 
 const menuLinks = [
   { label: "Início", href: "#hero" },
@@ -95,14 +97,13 @@ export function SiteHeader() {
       >
         <div className="mx-auto flex max-w-[1920px] items-center justify-between gap-6 px-6 py-5 sm:px-12 lg:px-16 xl:px-[48px]">
           <a href="#hero" className="shrink-0">
-            <img
-              src="/logo.svg"
+            <Image
+              src={logo}
               alt="Sleep House Colchões"
               width={220}
               height={48}
               className="h-9 w-auto sm:h-10 lg:h-11"
               fetchPriority="high"
-              decoding="async"
             />
           </a>
 
