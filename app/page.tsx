@@ -13,7 +13,7 @@ const heroParagraphs = [
 
 const processParagraphs = [
   "O tufting, técnica de capitonê artesanal que define a identidade visual e estrutural do Dédicace Paris, não pode ser replicado em esteira industrial sem perder a precisão e a tensão que cada ponto exige. Cada botão é posicionado e fixado manualmente por artesãos especializados.",
-  "Os tecidos que revestem o Dédicace Paris vêm dos mesmos fornecedores de alfaiataria que trabalham sob medida para quem exige que o material envelheça com dignidade e não se desgaste. São linho, seda e algodão de alta gramatura com toque e caimento que não existem em colchões produzidos em massa.",
+  "Tecidos que revestem A Belleville vêm dos mesmos fornecedores de alfaiataria que trabalham sob medida para quem exige que o material envelheça com dignidade e não se desgaste. São linho, seda e algodão de alta gramatura com toque e caimento que não existem em colchões produzidos em massa.",
   "A montagem não acontece em linha de produção. Acontece em bancada, camada por camada, com controle manual em cada etapa.",
 ];
 
@@ -236,7 +236,7 @@ export default function Home() {
                   className="font-display text-[40px] leading-[1.05] tracking-[-0.03em] text-[#0a0a0a] sm:text-[44px] lg:text-[48px]"
                   data-reveal
                 >
-                  Enquanto o mercado acelera a produção, o Dédicace Paris ainda
+                  Enquanto o mercado acelera a produção, A Dédicace Paris ainda
                   leva horas para ser feito.
                 </h2>
 
@@ -422,7 +422,7 @@ export default function Home() {
                     dias pelos próximos dez anos. Ele vai perceber a diferença.
                   </p>
                   <p>
-                    O Dédicace Paris é o único produto disponível no Brasil que
+                    A Dédicace Paris é a unica marca disponível no Brasil que
                     une estética de alfaiataria, construção artesanal e
                     procedência europeia verificável. É a especificação que seus
                     clientes reconhecem e que sustenta o padrão de qualquer

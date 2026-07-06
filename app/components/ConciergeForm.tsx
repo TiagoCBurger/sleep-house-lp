@@ -6,7 +6,7 @@ import { PageUrlField } from "./PageUrlField";
 import { SubmitButton } from "./SubmitButton";
 
 const profileOptions = [
-  "Sou Cliente Final",
+  "Estou comprando para minha casa",
   "Sou Arquiteto ou Designer",
 ] as const;
 
