@@ -12,14 +12,50 @@ const profileOptions = [
 
 const storeOptions = ["Americana", "Piracicaba"] as const;
 
-export function ConciergeForm() {
+const productOptions = [
+  "Colchão",
+  "Cama box ou box baú",
+  "Travesseiro",
+  "Capa/protetor de colchão",
+] as const;
+
+const sizeOptions = ["King", "Queen", "Casal", "Solteiro", "Medida especial"] as const;
+const comfortOptions = [
+  "Macio",
+  "Intermediário",
+  "Firme / Ortopédico",
+  "Quero ajuda do vendedor",
+] as const;
+const timingOptions = [
+  "O mais rápido possível",
+  "Este mês",
+  "Nos próximos 3 meses",
+  "Apenas pesquisando preços",
+] as const;
+
+export function ConciergeForm({
+  origin = "Landing Page Sleep House Dedicace Paris",
+  qualification = false,
+  successPath = "/obrigado",
+}: {
+  origin?: string;
+  qualification?: boolean;
+  successPath?: "/obrigado" | "/encontre-seu-colchao-ideal-typ";
+}) {
   const [state, formAction] = useActionState(submitConciergeForm, {
     error: "",
   });
 
   return (
-    <form className="flex flex-col gap-8" action={formAction}>
+    <form
+      className="flex flex-col gap-8"
+      action={formAction}
+      data-lead-form
+      data-form-origin={origin}
+    >
       <PageUrlField />
+      <input type="hidden" name="origem" value={origin} />
+      <input type="hidden" name="success_path" value={successPath} />
       <label className="flex flex-col gap-3">
         <span className="text-[9px] font-light uppercase tracking-[0.18em] text-[#f5f0e8]/30">
           Nome completo
@@ -33,6 +69,15 @@ export function ConciergeForm() {
           required
         />
       </label>
+
+      {qualification && (
+        <div className="grid gap-7 sm:grid-cols-2">
+          <QuestionSelect name="p1_produto" label="O que você está buscando?" options={productOptions} />
+          <QuestionSelect name="p2_tamanho" label="Qual tamanho você busca?" options={sizeOptions} />
+          <QuestionSelect name="p3_conforto" label="Qual sua preferência de conforto?" options={comfortOptions} />
+          <QuestionSelect name="p4_prazo" label="Para quando é a compra?" options={timingOptions} />
+        </div>
+      )}
 
       <label className="flex flex-col gap-3">
         <span className="text-[9px] font-light uppercase tracking-[0.18em] text-[#f5f0e8]/30">
@@ -50,7 +95,23 @@ export function ConciergeForm() {
         />
       </label>
 
-      <fieldset className="border-0 p-0">
+      <label className="flex cursor-pointer items-start gap-3 text-[11px] font-light leading-[1.65] text-[#f5f0e8]/45">
+        <input
+          type="checkbox"
+          name="consentimento_lgpd"
+          value="sim"
+          className="mt-0.5 size-[18px] shrink-0 appearance-none border border-[#c4a962]/40 checked:border-[#c4a962] checked:bg-[#c4a962]"
+          required
+        />
+        <span>
+          Concordo em receber o contato da Sleep House e declaro que li a{" "}
+          <a href="/politica-de-privacidade" target="_blank" className="text-[#c4a962] underline underline-offset-4">
+            Política de Privacidade
+          </a>.
+        </span>
+      </label>
+
+      {!qualification && <fieldset className="border-0 p-0">
         <legend className="mb-4 text-[9px] font-light uppercase tracking-[0.18em] text-[#f5f0e8]/30">
           Perfil
         </legend>
@@ -71,11 +132,11 @@ export function ConciergeForm() {
             </label>
           ))}
         </div>
-      </fieldset>
+      </fieldset>}
 
       <label className="flex flex-col gap-3">
         <span className="text-[9px] font-light uppercase tracking-[0.18em] text-[#f5f0e8]/30">
-          Loja de preferência
+          {qualification ? "Qual loja fica mais perto de você?" : "Loja de preferência"}
         </span>
         <select
           className="h-12 border-b border-[#f5f0e8]/15 bg-[#0a0a0a] pb-3 text-base italic text-[#f5f0e8] outline-none"
@@ -108,5 +169,32 @@ export function ConciergeForm() {
         )}
       </div>
     </form>
+  );
+}
+
+function QuestionSelect({
+  name,
+  label,
+  options,
+}: {
+  name: string;
+  label: string;
+  options: readonly string[];
+}) {
+  return (
+    <label className="flex flex-col gap-3">
+      <span className="min-h-7 text-[9px] font-light uppercase leading-[1.55] tracking-[0.15em] text-[#f5f0e8]/30">
+        {label}
+      </span>
+      <select
+        name={name}
+        defaultValue=""
+        className="h-12 border-b border-[#f5f0e8]/15 bg-[#0a0a0a] pb-3 text-sm text-[#f5f0e8] outline-none"
+        required
+      >
+        <option value="" disabled>Selecione</option>
+        {options.map((option) => <option key={option} value={option}>{option}</option>)}
+      </select>
+    </label>
   );
 }

@@ -42,6 +42,7 @@ export default function ObrigadoPage() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
+              data-cta="whatsapp-obrigado-dedicace"
               className="inline-flex h-[50px] w-full items-center justify-center bg-[#c4a962] px-8 text-[11px] font-medium uppercase tracking-[0.16em] text-[#0a0a0a] transition-colors duration-200 hover:bg-[#d4b872]"
               data-lux-button
             >

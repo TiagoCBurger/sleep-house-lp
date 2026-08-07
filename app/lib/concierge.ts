@@ -12,6 +12,11 @@ export type ConciergePayload = {
   loja_preferencia: string;
   origem: string;
   pagina: string;
+  produto?: string;
+  tamanho?: string;
+  conforto?: string;
+  prazo?: string;
+  consentimento_lgpd?: string;
 };
 
 export function onlyDigits(value: string) {
@@ -19,12 +24,24 @@ export function onlyDigits(value: string) {
 }
 
 export function isValidConciergePayload(payload: ConciergePayload) {
+  const isGeneralLanding = payload.origem.includes("Americana e Piracicaba");
+  const hasQualification =
+    !isGeneralLanding ||
+    Boolean(
+      payload.produto?.trim() &&
+        payload.tamanho?.trim() &&
+        payload.conforto?.trim() &&
+        payload.prazo?.trim(),
+    );
+
   return (
     payload.nome.trim().length >= 2 &&
     payload.whatsapp_digits.length >= 10 &&
     payload.whatsapp_digits.length <= 11 &&
     payload.perfil.trim().length > 0 &&
-    payload.loja_preferencia.trim().length > 0
+    payload.loja_preferencia.trim().length > 0 &&
+    payload.consentimento_lgpd === "sim" &&
+    hasQualification
   );
 }
 

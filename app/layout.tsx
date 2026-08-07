@@ -16,8 +16,9 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Sleep House | Dedicace Paris",
-  description: "Landing page para Dedicace Paris por Sleep House.",
+  title: "Sleep House | As melhores marcas para o seu sono",
+  description:
+    "Curadoria internacional e atendimento consultivo para encontrar o colchão ideal.",
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
     shortcut: "/favicon.svg",
@@ -52,6 +53,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
     y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 })(window, document, "clarity", "script", "xf937n4l49");`}
+        </Script>
+        <Script id="sleep-house-conversion-events" strategy="afterInteractive">
+          {`window.addEventListener('click',function(event){
+  var link=event.target.closest('[data-cta]');
+  if(link){window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'sleep_house_cta_click',cta:link.getAttribute('data-cta'),destination:link.getAttribute('href')});}
+});
+document.addEventListener('submit',function(event){
+  var form=event.target.closest('[data-lead-form]');
+  if(form){window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'sleep_house_form_submit',form_origin:form.getAttribute('data-form-origin')});}
+});`}
         </Script>
         <noscript>
           <iframe
