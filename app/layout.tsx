@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Jost, Playfair_Display } from "next/font/google";
+import { Fraunces, Manrope } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
-const jost = Jost({
+const manrope = Manrope({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-jost",
+  variable: "--font-manrope",
 });
 
-const playfairDisplay = Playfair_Display({
+const fraunces = Fraunces({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-playfair-display",
+  variable: "--font-fraunces",
 });
 
 export const metadata: Metadata = {
@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${jost.variable} ${playfairDisplay.variable} h-full antialiased`}
+      className={`${manrope.variable} ${fraunces.variable} h-full antialiased`}
     >
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" />

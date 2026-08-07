@@ -1,17 +1,27 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export function LuxuryMotion() {
+  const cursorDot = useRef<HTMLSpanElement>(null);
+  const cursorRing = useRef<HTMLSpanElement>(null);
+
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    if (reduceMotion.matches || window.innerWidth < 1024) {
+    if (
+      reduceMotion.matches ||
+      window.innerWidth < 1024 ||
+      !window.matchMedia("(hover: hover) and (pointer: fine)").matches
+    ) {
       return;
     }
 
     const cleanups: Array<() => void> = [];
     let revertContext = () => {};
+    const root = document.documentElement;
+
+    root.classList.add("has-lux-cursor");
 
     void (async () => {
       const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
@@ -20,6 +30,35 @@ export function LuxuryMotion() {
       ]);
 
       gsap.registerPlugin(ScrollTrigger);
+
+      const dotX = cursorDot.current ? gsap.quickSetter(cursorDot.current, "x", "px") : null;
+      const dotY = cursorDot.current ? gsap.quickSetter(cursorDot.current, "y", "px") : null;
+      const ringX = cursorRing.current ? gsap.quickTo(cursorRing.current, "x", { duration: 0.22, ease: "power3.out", unit: "px" }) : null;
+      const ringY = cursorRing.current ? gsap.quickTo(cursorRing.current, "y", { duration: 0.22, ease: "power3.out", unit: "px" }) : null;
+
+      const onPointerMove = (event: PointerEvent) => {
+        dotX?.(event.clientX);
+        dotY?.(event.clientY);
+        ringX?.(event.clientX);
+        ringY?.(event.clientY);
+        root.classList.add("lux-cursor-visible");
+      };
+
+      const onPointerOver = (event: PointerEvent) => {
+        const target = event.target instanceof Element ? event.target.closest("a, button, input, textarea, select, label") : null;
+        root.classList.toggle("lux-cursor-active", Boolean(target));
+      };
+
+      const onPointerLeave = () => root.classList.remove("lux-cursor-visible", "lux-cursor-active");
+
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+      document.addEventListener("pointerover", onPointerOver, { passive: true });
+      document.documentElement.addEventListener("pointerleave", onPointerLeave);
+      cleanups.push(() => {
+        window.removeEventListener("pointermove", onPointerMove);
+        document.removeEventListener("pointerover", onPointerOver);
+        document.documentElement.removeEventListener("pointerleave", onPointerLeave);
+      });
 
       const ctx = gsap.context(() => {
         const heroTimeline = gsap.timeline({
@@ -135,8 +174,14 @@ export function LuxuryMotion() {
     return () => {
       cleanups.forEach((cleanup) => cleanup());
       revertContext();
+      root.classList.remove("has-lux-cursor", "lux-cursor-visible", "lux-cursor-active");
     };
   }, []);
 
-  return null;
+  return (
+    <div className="lux-cursor" aria-hidden="true">
+      <span ref={cursorRing} className="lux-cursor-ring" />
+      <span ref={cursorDot} className="lux-cursor-dot" />
+    </div>
+  );
 }
