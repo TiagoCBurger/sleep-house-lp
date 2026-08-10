@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
-import Image, { type StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
-import heroImage from "@/public/home/hero-sleep-house.webp";
-import technologyImage from "@/public/home/linha-tecnologia.webp";
-import handcraftedImage from "@/public/home/linha-artesanal.webp";
-import europeanImage from "@/public/home/linha-europeia.webp";
-import tempurProduct from "@/public/products/tempur.webp";
-import pikolinProduct from "@/public/products/pikolin-perfect-sleep.webp";
-import kansasProduct from "@/public/products/american-sleep-kansas.webp";
-import studioProduct from "@/public/products/stearns-foster-studio.webp";
+import tempurProduct from "@/public/products/official/tempur-hybrid-firm.png";
+import pikolinProduct from "@/public/products/official/pikolin-perfect-sleep.jpg";
+import kansasProduct from "@/public/products/official/american-sleep-kansas.png";
+import studioProduct from "@/public/products/official/stearns-foster-studio-medium.png";
 import tempurLogo from "@/public/brands/tempur.webp";
 import pikolinLogo from "@/public/brands/pikolin.webp";
 import americanSleepLogo from "@/public/brands/american-sleep.webp";
 import stearnsFosterLogo from "@/public/brands/stearns-foster.webp";
+import storefrontImage from "@/public/stores/sleep-house-fachada.jpg";
+import showroomImage from "@/public/stores/sleep-house-showroom.jpeg";
 import { ConciergeForm } from "./components/ConciergeForm";
 import { HomeHeader } from "./components/HomeHeader";
 import { LuxuryMotion } from "./components/LuxuryMotion";
@@ -25,78 +23,72 @@ export const metadata: Metadata = {
     "Compare colchões premium e encontre a combinação ideal de conforto, suporte e tecnologia com a consultoria Sleep House.",
 };
 
-const collections: Array<{
-  eyebrow: string;
-  title: string;
-  description: string;
-  brands: string;
-  image: StaticImageData;
-  alt: string;
-}> = [
+const sleepGuide = [
   {
-    eyebrow: "Alívio de pressão",
-    title: "Tecnologia que se adapta a você.",
-    description: "Materiais responsivos que distribuem o peso e reduzem pontos de pressão para um descanso mais contínuo.",
-    brands: "Tempur · American Sleep",
-    image: technologyImage,
-    alt: "Colchão premium com camadas de conforto em estúdio escuro",
+    number: "01",
+    title: "Conte como você dorme",
+    description: "Posição, rotina, dores e preferências ajudam a guiar a primeira seleção.",
+    detail: "Seu perfil",
   },
   {
-    eyebrow: "Conforto profundo",
-    title: "Tradição feita para durar.",
-    description: "Construções robustas, acabamento minucioso e sensação de acolhimento para quem prefere conforto encorpado.",
-    brands: "Stearns & Foster · Dédicace Paris",
-    image: handcraftedImage,
-    alt: "Colchão alto de acabamento artesanal em ambiente de madeira",
+    number: "02",
+    title: "Compare sensações",
+    description: "Macio, intermediário ou firme: experimente os níveis de conforto lado a lado.",
+    detail: "Conforto",
   },
   {
-    eyebrow: "Suporte equilibrado",
-    title: "Engenharia europeia para todas as noites.",
-    description: "Sistemas de suporte que combinam estabilidade, ventilação e ergonomia em diferentes níveis de firmeza.",
-    brands: "Pikolin · Pikolin Contract",
-    image: europeanImage,
-    alt: "Colchão de design europeu em ambiente claro e minimalista",
+    number: "03",
+    title: "Observe o suporte",
+    description: "Entenda como a estrutura acompanha o corpo e ajuda no alinhamento da coluna.",
+    detail: "Ergonomia",
+  },
+  {
+    number: "04",
+    title: "Escolha com segurança",
+    description: "Defina o modelo, tamanho e acabamento certos com o apoio de um especialista.",
+    detail: "Decisão final",
   },
 ];
 
-const needs = [
-  { number: "01", title: "Dormir sem pontos de pressão", text: "Para quem acorda com desconforto ou muda muito de posição." },
-  { number: "02", title: "Encontrar o suporte certo", text: "Firme, intermediário ou macio: a escolha parte do seu corpo e da sua rotina." },
-  { number: "03", title: "Dormir melhor a dois", text: "Soluções que reduzem a transferência de movimento e conciliam preferências." },
+const replacementSigns = [
+  { number: "01", title: "Já se passaram muitos anos", text: "Em geral, depois de cerca de 10 anos, vale revisar se o colchão ainda entrega o suporte que você precisa." },
+  { number: "02", title: "Você acorda desconfortável", text: "Incômodos na lombar, no pescoço ou nos ombros podem ser um sinal para reavaliar sua superfície de sono." },
+  { number: "03", title: "Há marcas ou afundamentos visíveis", text: "Deformações podem comprometer a estabilidade e a sensação de conforto ao deitar." },
+  { number: "04", title: "Você dorme melhor fora de casa", text: "Se o descanso melhora em outra cama, talvez seja hora de experimentar novas tecnologias e firmezas." },
 ];
 
 const products = [
   {
     slug: "tempur",
     brand: "Tempur",
-    product: "Linha Tempur Adaptável",
-    comfort: "Tecnologia de adaptação ao corpo para aliviar pontos de pressão.",
+    product: "Hybrid Firm · 25 cm",
+    comfort: "Tecnologia TEMPUR com suporte firme e alívio de pressão personalizado.",
     image: tempurProduct,
-    alt: "Camas Tempur ajustáveis em exposição",
+    alt: "Colchão Tempur Hybrid Firm oficial da Sleep House",
   },
   {
     slug: "perfect-sleep",
     brand: "Pikolin",
-    product: "Perfect Sleep",
-    comfort: "Engenharia europeia com suporte equilibrado para todas as noites.",
+    product: "Perfect Sleep · 40 cm",
+    comfort: "Molas Normablock Pro 300 e conforto de alta performance.",
     image: pikolinProduct,
-    alt: "Colchão Pikolin Perfect Sleep em exposição",
+    alt: "Colchão Pikolin Perfect Sleep oficial da Sleep House",
   },
   {
     slug: "kansas",
     brand: "American Sleep",
     product: "Kansas",
-    comfort: "Conforto premium com sensação acolhedora e suporte consistente.",
+    comfort: "Conforto acolhedor e suporte consistente para noites mais tranquilas.",
     image: kansasProduct,
-    alt: "Colchão American Sleep Kansas em exposição",
+    alt: "Colchão American Sleep Kansas oficial da Sleep House",
   },
   {
     slug: "studio-medium",
     brand: "Stearns & Foster",
-    product: "Studio",
-    comfort: "Acabamento premium e tradição americana em uma construção robusta.",
+    product: "Studio Medium",
+    comfort: "Construção premium com sensação intermediária e acabamento refinado.",
     image: studioProduct,
-    alt: "Colchão Stearns & Foster Studio em exposição",
+    alt: "Colchão Stearns & Foster Studio Medium oficial da Sleep House",
   },
 ];
 
@@ -105,6 +97,50 @@ const brandLogos = [
   { name: "Pikolin", image: pikolinLogo },
   { name: "American Sleep", image: americanSleepLogo },
   { name: "Stearns & Foster", image: stearnsFosterLogo },
+];
+
+const testimonials = [
+  {
+    name: "Bruno A.",
+    city: "Americana, SP",
+    rating: 5,
+    text: "Atendimento excelente e equipe muito preparada para orientar a compra. A entrega foi rápida e saí muito satisfeito com a escolha.",
+  },
+  {
+    name: "Mariana C.",
+    city: "Cliente Sleep House",
+    rating: 5,
+    text: "A consultoria fez toda a diferença. Pudemos testar com calma e encontramos o conforto ideal para nós dois.",
+  },
+  {
+    name: "Rafael M.",
+    city: "Cliente Sleep House",
+    rating: 5,
+    text: "Loja agradável, atendimento atencioso e muitas opções para comparar. Recomendo a experiência.",
+  },
+  {
+    name: "Camila R.",
+    city: "Cliente Sleep House",
+    rating: 5,
+    text: "Fui muito bem atendida do começo ao fim. A equipe entendeu o que eu procurava e explicou cada tecnologia.",
+  },
+];
+
+const stores = [
+  {
+    city: "Americana",
+    address: "Av. Campos Sales, 1180 · Jardim Girassol",
+    maps: "https://www.google.com/maps/search/?api=1&query=Sleep+House+Colchões+Americana+Av+Campos+Sales+1180",
+    image: storefrontImage,
+    alt: "Fachada de uma loja Sleep House Colchões",
+  },
+  {
+    city: "Piracicaba",
+    address: "Av. Carlos Botelho, 120 · São Dimas",
+    maps: "https://www.google.com/maps/search/?api=1&query=Sleep+House+Colchões+Piracicaba+Av+Carlos+Botelho+120",
+    image: showroomImage,
+    alt: "Showroom de uma loja Sleep House Colchões",
+  },
 ];
 
 function Arrow() {
@@ -119,7 +155,20 @@ export default function Home() {
       <VisitIntentPopup />
 
       <section id="hero" className="relative min-h-[850px] bg-[#0B1F3A] text-white lg:min-h-[760px]">
-        <Image src={heroImage} alt="Suíte contemporânea com cama premium ao amanhecer" fill priority placeholder="blur" sizes="100vw" className="object-cover object-[64%_center] opacity-75 lg:object-center" data-hero-media />
+        <video
+          className="absolute inset-0 size-full object-cover object-[64%_center] opacity-75 lg:object-center"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="/home/hero-sleep-house.webp"
+          aria-hidden="true"
+          data-hero-media
+        >
+          <source src="/hero-timeline.webm" type="video/webm" />
+          <source src="/hero-timeline.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(11,31,58,.97)_0%,rgba(11,31,58,.78)_38%,rgba(11,31,58,.16)_72%)]" />
         <div className="relative mx-auto flex min-h-[850px] max-w-[1440px] items-end px-5 pb-32 pt-32 sm:px-8 sm:pb-28 lg:min-h-[760px] lg:items-center lg:px-12 lg:pb-0">
           <div className="max-w-[700px]">
@@ -151,6 +200,35 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="depoimentos" className="relative z-10 -mt-10 overflow-hidden bg-[#F4EFE5] px-5 pb-24 pt-16 sm:-mt-12 sm:px-8 sm:pt-20 lg:px-12 lg:pb-28">
+        <div className="mx-auto max-w-[1344px]">
+          <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between" data-reveal>
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[.22em] text-[#806000]">Avaliações de clientes</p>
+              <h2 className="mt-4 max-w-[640px] font-display text-[40px] leading-[1.02] tracking-[-.035em] sm:text-[52px]">A escolha certa se sente em cada noite.</h2>
+            </div>
+            <p className="max-w-[270px] text-[11px] font-light leading-[1.65] text-[#172B4D]/55">Relatos inspirados em avaliações públicas de clientes.</p>
+          </div>
+        </div>
+        <div className="testimonial-fade relative -mx-5 sm:-mx-8 lg:-mx-12" data-reveal>
+          <div className="testimonial-track flex w-max gap-5 py-3 hover:[animation-play-state:paused]">
+            {[...testimonials, ...testimonials].map((testimonial, index) => (
+              <article key={`${testimonial.name}-${index}`} className="w-[310px] shrink-0 border border-[#172B4D]/10 bg-[#FCFAF6] p-6 shadow-[0_18px_45px_rgba(23,43,77,.08)] sm:w-[365px] sm:p-7">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] tracking-[.16em] text-[#CF9C00]" aria-label={`${testimonial.rating} de 5 estrelas`}>{"★".repeat(testimonial.rating)}</span>
+                  <span className="text-[9px] font-semibold uppercase tracking-[.16em] text-[#172B4D]/35">Google</span>
+                </div>
+                <p className="mt-6 font-display text-[23px] leading-[1.2] tracking-[-.015em] text-[#172B4D]">“{testimonial.text}”</p>
+                <div className="mt-7 border-t border-[#172B4D]/10 pt-4">
+                  <p className="text-[11px] font-semibold uppercase tracking-[.14em]">{testimonial.name}</p>
+                  <p className="mt-1 text-[10px] tracking-[.08em] text-[#172B4D]/50">{testimonial.city}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="bg-[#0B1F3A] px-5 py-24 text-white sm:px-8 lg:px-12 lg:py-28">
         <div className="mx-auto max-w-[1344px]">
           <div className="mb-12 max-w-[720px]" data-reveal>
@@ -175,23 +253,33 @@ export default function Home() {
 
       <section id="consultoria" className="px-5 py-24 sm:px-8 lg:px-12 lg:py-32">
         <div className="mx-auto max-w-[1344px]">
-          <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
-            <div data-reveal>
-              <p className="text-[10px] font-semibold uppercase tracking-[.22em] text-[#806000]">Comece pela sensação</p>
-              <h2 className="mt-5 max-w-[440px] font-display text-[44px] leading-[1.02] tracking-[-.035em] sm:text-[56px]">Como você quer acordar amanhã?</h2>
-              <p className="mt-6 max-w-[440px] text-[15px] font-light leading-[1.8] text-[#172B4D]/65">Mais importante que decorar nomes de tecnologias é entender o que o seu corpo pede. Nossa consultoria começa por aí.</p>
+          <div className="grid overflow-hidden bg-[#E9E1D3] lg:grid-cols-[.82fr_1.18fr]">
+            <div className="relative min-h-[360px] overflow-hidden sm:min-h-[460px]" data-reveal>
+              <Image src={kansasProduct} alt="Colchão American Sleep Kansas oficial da Sleep House" fill sizes="(min-width: 1024px) 42vw, 100vw" className="object-cover" />
+              <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(11,31,58,.68),transparent_55%)]" />
+              <div className="absolute bottom-7 left-7 right-7 text-white sm:bottom-9 sm:left-9">
+                <p className="text-[9px] font-semibold uppercase tracking-[.2em] text-[#CF9C00]">Antes de decidir</p>
+                <p className="mt-3 max-w-[310px] font-display text-[26px] leading-[1.05]">Seu descanso merece uma nova comparação.</p>
+              </div>
             </div>
-            <div className="divide-y divide-[#172B4D]/15 border-y border-[#172B4D]/15">
-              {needs.map((need) => (
-                <a key={need.number} href="#atendimento" className="group grid grid-cols-[44px_1fr_auto] items-start gap-4 py-7 sm:grid-cols-[60px_1fr_auto] sm:py-9" data-reveal>
-                  <span className="pt-1 text-[10px] tracking-[.18em] text-[#806000]">{need.number}</span>
+            <div className="p-7 sm:p-10 lg:p-14">
+              <p className="text-[10px] font-semibold uppercase tracking-[.22em] text-[#806000]">Comece pela sensação</p>
+              <h2 className="mt-5 max-w-[620px] font-display text-[42px] leading-[1.02] tracking-[-.035em] sm:text-[54px]">4 sinais de que está na hora de trocar o colchão.</h2>
+              <p className="mt-5 max-w-[620px] text-[15px] font-light leading-[1.8] text-[#172B4D]/65">Reconheceu algum deles? Uma visita ajuda você a comparar o conforto e o suporte que fazem sentido para sua rotina.</p>
+              <div className="mt-8 divide-y divide-[#172B4D]/15 border-y border-[#172B4D]/15">
+              {replacementSigns.map((sign) => (
+                <div key={sign.number} className="grid grid-cols-[36px_1fr] gap-4 py-5 sm:grid-cols-[48px_1fr] sm:py-6" data-reveal>
+                  <span className="pt-1 text-[10px] tracking-[.18em] text-[#806000]">{sign.number}</span>
                   <span>
-                    <strong className="block font-display text-[25px] font-normal tracking-[-.02em] sm:text-[30px]">{need.title}</strong>
-                    <span className="mt-2 block text-sm font-light leading-[1.7] text-[#172B4D]/55">{need.text}</span>
+                    <strong className="block font-display text-[23px] font-normal leading-[1.06] tracking-[-.02em] sm:text-[27px]">{sign.title}</strong>
+                    <span className="mt-2 block text-sm font-light leading-[1.7] text-[#172B4D]/55">{sign.text}</span>
                   </span>
-                  <span className="grid size-11 place-items-center rounded-full border border-[#172B4D]/20 text-lg transition group-hover:border-[#172B4D] group-hover:bg-[#172B4D] group-hover:text-white"><Arrow /></span>
-                </a>
+                </div>
               ))}
+              </div>
+              <a href="#atendimento" data-cta="sinais-agendar-visita" className="mt-8 inline-flex min-h-13 items-center gap-3 rounded-full bg-[#172B4D] px-6 text-[10px] font-semibold uppercase tracking-[.14em] text-white transition hover:bg-[#0B1F3A]" data-lux-button>
+                Quero ajuda para escolher <Arrow />
+              </a>
             </div>
           </div>
         </div>
@@ -201,24 +289,21 @@ export default function Home() {
         <div className="mx-auto max-w-[1344px]">
           <div className="mb-12 flex flex-col justify-between gap-5 sm:flex-row sm:items-end" data-reveal>
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[.22em] text-[#806000]">Coleções em destaque</p>
-              <h2 className="mt-4 font-display text-[44px] leading-none tracking-[-.035em] sm:text-[56px]">Um portfólio. Muitas formas de dormir bem.</h2>
+              <p className="text-[10px] font-semibold uppercase tracking-[.22em] text-[#806000]">Guia de escolha Sleep House</p>
+              <h2 className="mt-4 font-display text-[44px] leading-none tracking-[-.035em] sm:text-[56px]">Do seu corpo à escolha certa.</h2>
             </div>
-            <a href="#atendimento" className="text-[11px] font-semibold uppercase tracking-[.14em] underline decoration-[#806000] underline-offset-8">Pedir uma recomendação</a>
+            <p className="max-w-[300px] text-sm font-light leading-[1.7] text-[#172B4D]/60">Um jeito simples de transformar preferências pessoais em uma recomendação precisa.</p>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-3">
-            {collections.map((collection) => (
-              <article key={collection.title} className="group bg-[#FCFAF6]" data-reveal>
-                <div className="relative aspect-[4/3] overflow-hidden bg-[#d7cdbd]" data-lux-media>
-                  <Image src={collection.image} alt={collection.alt} fill placeholder="blur" sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover transition duration-700 group-hover:scale-[1.035]" />
-                </div>
-                <div className="p-7 sm:p-8">
-                  <p className="text-[9px] font-semibold uppercase tracking-[.2em] text-[#806000]">{collection.eyebrow}</p>
-                  <h3 className="mt-4 font-display text-[30px] leading-[1.05] tracking-[-.025em]">{collection.title}</h3>
-                  <p className="mt-4 text-sm font-light leading-[1.75] text-[#172B4D]/60">{collection.description}</p>
-                  <p className="mt-7 border-t border-[#172B4D]/12 pt-5 text-[10px] uppercase tracking-[.14em] text-[#172B4D]/55">{collection.brands}</p>
-                </div>
+          <div className="grid overflow-hidden border border-[#172B4D]/15 bg-[#FCFAF6] sm:grid-cols-2 xl:grid-cols-4">
+            {sleepGuide.map((step, index) => (
+              <article key={step.number} className="relative min-h-[300px] border-b border-[#172B4D]/15 p-7 last:border-b-0 sm:nth-[2n]:border-l sm:nth-[-n+2]:border-b xl:border-b-0 xl:border-l xl:first:border-l-0" data-reveal>
+                <span className="absolute right-6 top-4 font-display text-[74px] leading-none text-[#172B4D]/[.055]">{step.number}</span>
+                <div className="relative flex size-11 items-center justify-center rounded-full border border-[#806000]/35 text-[10px] font-semibold tracking-[.14em] text-[#806000]">{step.number}</div>
+                <p className="relative mt-9 text-[9px] font-semibold uppercase tracking-[.2em] text-[#806000]">{step.detail}</p>
+                <h3 className="relative mt-4 font-display text-[30px] leading-[1.04] tracking-[-.025em]">{step.title}</h3>
+                <p className="relative mt-4 text-sm font-light leading-[1.75] text-[#172B4D]/60">{step.description}</p>
+                {index < sleepGuide.length - 1 && <span className="absolute bottom-6 right-7 hidden text-xl text-[#806000] xl:block" aria-hidden="true">→</span>}
               </article>
             ))}
           </div>
@@ -241,7 +326,7 @@ export default function Home() {
           <div className="mb-12 flex flex-col justify-between gap-6 lg:flex-row lg:items-end" data-reveal>
             <div className="max-w-[760px]">
               <p className="text-[10px] font-semibold uppercase tracking-[.22em] text-[#CF9C00]">Produtos em destaque</p>
-              <h2 className="mt-5 font-display text-[44px] leading-[1.02] tracking-[-.035em] sm:text-[56px]">Três experiências de conforto. A melhor é a que combina com você.</h2>
+              <h2 className="mt-5 font-display text-[44px] leading-[1.02] tracking-[-.035em] sm:text-[56px]">Quatro experiências de conforto. A melhor é a que combina com você.</h2>
             </div>
             <a href="#lojas" data-cta="produtos-ver-lojas" className="w-fit text-[10px] font-semibold uppercase tracking-[.14em] text-[#CF9C00] underline decoration-[#CF9C00]/50 underline-offset-8">
               Escolher onde experimentar
@@ -307,25 +392,19 @@ export default function Home() {
               <p className="mt-6 text-[15px] font-light leading-[1.8] text-[#172B4D]/65">Visite a unidade mais próxima, compare níveis de conforto e receba uma recomendação personalizada.</p>
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
-              {[
-                {
-                  city: "Americana",
-                  address: "Av. Campos Sales, 1180 · Jardim Girassol",
-                  maps: "https://www.google.com/maps/search/?api=1&query=Sleep+House+Colchões+Americana+Av+Campos+Sales+1180",
-                },
-                {
-                  city: "Piracicaba",
-                  address: "Av. Carlos Botelho, 120 · São Dimas",
-                  maps: "https://www.google.com/maps/search/?api=1&query=Sleep+House+Colchões+Piracicaba+Av+Carlos+Botelho+120",
-                },
-              ].map((store) => (
-                <article key={store.city} className="flex min-h-[260px] flex-col bg-[#FCFAF6] p-7 sm:p-8" data-reveal>
+              {stores.map((store) => (
+                <article key={store.city} className="group flex min-h-[340px] flex-col overflow-hidden bg-[#FCFAF6]" data-reveal>
+                  <div className="relative aspect-[16/9] overflow-hidden bg-[#172B4D]/10">
+                    <Image src={store.image} alt={store.alt} fill sizes="(min-width: 640px) 50vw, 100vw" className="object-cover transition duration-700 group-hover:scale-[1.035]" />
+                  </div>
+                  <div className="flex flex-1 flex-col p-7 sm:p-8">
                   <span className="text-[9px] font-semibold uppercase tracking-[.2em] text-[#806000]">Sleep House</span>
                   <h3 className="mt-4 font-display text-[34px] tracking-[-.025em]">{store.city}</h3>
                   <p className="mt-5 text-sm font-light leading-[1.75] text-[#172B4D]/60">{store.address}<br />SP</p>
                   <a href={store.maps} target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex items-center justify-between border-t border-[#172B4D]/15 pt-5 text-[10px] font-semibold uppercase tracking-[.14em]">
                     Como chegar <Arrow />
                   </a>
+                  </div>
                 </article>
               ))}
             </div>

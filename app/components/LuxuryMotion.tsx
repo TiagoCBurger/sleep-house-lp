@@ -8,57 +8,88 @@ export function LuxuryMotion() {
 
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const supportsCursor =
+      window.innerWidth >= 1024 &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-    if (
-      reduceMotion.matches ||
-      window.innerWidth < 1024 ||
-      !window.matchMedia("(hover: hover) and (pointer: fine)").matches
-    ) {
-      return;
-    }
+    if (reduceMotion.matches) return;
 
+    let cancelled = false;
     const cleanups: Array<() => void> = [];
     let revertContext = () => {};
     const root = document.documentElement;
 
-    root.classList.add("has-lux-cursor");
+    if (supportsCursor) root.classList.add("has-lux-cursor");
 
     void (async () => {
-      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+      const [{ default: gsap }, { ScrollTrigger }, { default: Lenis }] = await Promise.all([
         import("gsap"),
         import("gsap/ScrollTrigger"),
+        import("lenis"),
       ]);
+
+      // React intentionally mounts, cleans up, and mounts effects again in
+      // development. Do not attach GSAP listeners after the first effect has
+      // already been cleaned up.
+      if (cancelled) return;
 
       gsap.registerPlugin(ScrollTrigger);
 
-      const dotX = cursorDot.current ? gsap.quickSetter(cursorDot.current, "x", "px") : null;
-      const dotY = cursorDot.current ? gsap.quickSetter(cursorDot.current, "y", "px") : null;
-      const ringX = cursorRing.current ? gsap.quickTo(cursorRing.current, "x", { duration: 0.22, ease: "power3.out", unit: "px" }) : null;
-      const ringY = cursorRing.current ? gsap.quickTo(cursorRing.current, "y", { duration: 0.22, ease: "power3.out", unit: "px" }) : null;
+      if (supportsCursor) {
+        const dotX = cursorDot.current ? gsap.quickSetter(cursorDot.current, "x", "px") : null;
+        const dotY = cursorDot.current ? gsap.quickSetter(cursorDot.current, "y", "px") : null;
+        const ringX = cursorRing.current ? gsap.quickTo(cursorRing.current, "x", { duration: 0.22, ease: "power3.out", unit: "px" }) : null;
+        const ringY = cursorRing.current ? gsap.quickTo(cursorRing.current, "y", { duration: 0.22, ease: "power3.out", unit: "px" }) : null;
 
-      const onPointerMove = (event: PointerEvent) => {
-        dotX?.(event.clientX);
-        dotY?.(event.clientY);
-        ringX?.(event.clientX);
-        ringY?.(event.clientY);
-        root.classList.add("lux-cursor-visible");
-      };
+        const onPointerMove = (event: PointerEvent) => {
+          dotX?.(event.clientX);
+          dotY?.(event.clientY);
+          ringX?.(event.clientX);
+          ringY?.(event.clientY);
+          root.classList.add("lux-cursor-visible");
+        };
 
-      const onPointerOver = (event: PointerEvent) => {
-        const target = event.target instanceof Element ? event.target.closest("a, button, input, textarea, select, label") : null;
-        root.classList.toggle("lux-cursor-active", Boolean(target));
-      };
+        const onPointerOver = (event: PointerEvent) => {
+          const target = event.target instanceof Element ? event.target.closest("a, button, input, textarea, select, label") : null;
+          root.classList.toggle("lux-cursor-active", Boolean(target));
+        };
 
-      const onPointerLeave = () => root.classList.remove("lux-cursor-visible", "lux-cursor-active");
+        const onPointerLeave = () => root.classList.remove("lux-cursor-visible", "lux-cursor-active");
 
-      window.addEventListener("pointermove", onPointerMove, { passive: true });
-      document.addEventListener("pointerover", onPointerOver, { passive: true });
-      document.documentElement.addEventListener("pointerleave", onPointerLeave);
-      cleanups.push(() => {
-        window.removeEventListener("pointermove", onPointerMove);
-        document.removeEventListener("pointerover", onPointerOver);
-        document.documentElement.removeEventListener("pointerleave", onPointerLeave);
-      });
+        window.addEventListener("pointermove", onPointerMove, { passive: true });
+        document.addEventListener("pointerover", onPointerOver, { passive: true });
+        document.documentElement.addEventListener("pointerleave", onPointerLeave);
+        cleanups.push(() => {
+          window.removeEventListener("pointermove", onPointerMove);
+          document.removeEventListener("pointerover", onPointerOver);
+          document.documentElement.removeEventListener("pointerleave", onPointerLeave);
+        });
+      }
+
+      const lenis = supportsCursor
+        ? new Lenis({
+            anchors: true,
+            duration: 1.15,
+            easing: (progress: number) => 1 - Math.pow(1 - progress, 4),
+            smoothWheel: true,
+            wheelMultiplier: 0.9,
+            touchMultiplier: 1,
+          })
+        : null;
+
+      if (lenis) {
+        const updateScrollTrigger = () => ScrollTrigger.update();
+        const updateLenis = (time: number) => lenis.raf(time * 1000);
+
+        lenis.on("scroll", updateScrollTrigger);
+        gsap.ticker.add(updateLenis);
+        gsap.ticker.lagSmoothing(0);
+        cleanups.push(() => {
+          lenis.off("scroll", updateScrollTrigger);
+          gsap.ticker.remove(updateLenis);
+          lenis.destroy();
+        });
+      }
 
       const ctx = gsap.context(() => {
         const heroTimeline = gsap.timeline({
@@ -86,12 +117,31 @@ export function LuxuryMotion() {
         gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
           gsap.from(element, {
             autoAlpha: 0,
-            y: 44,
-            duration: 1,
+            y: 32,
+            scale: 0.985,
+            filter: "blur(5px)",
+            duration: 0.9,
             ease: "power3.out",
             scrollTrigger: {
               trigger: element,
-              start: "top 84%",
+              start: "top 86%",
+              once: true,
+            },
+          });
+        });
+
+        gsap.utils.toArray<HTMLElement>("main > section:not(#hero)").forEach((section) => {
+          const heading = section.querySelector<HTMLElement>("h2");
+          if (!heading) return;
+
+          gsap.from(heading, {
+            clipPath: "inset(0 0 100% 0)",
+            y: 20,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 78%",
               once: true,
             },
           });
@@ -169,9 +219,11 @@ export function LuxuryMotion() {
       });
 
       revertContext = () => ctx.revert();
+      ScrollTrigger.refresh();
     })();
 
     return () => {
+      cancelled = true;
       cleanups.forEach((cleanup) => cleanup());
       revertContext();
       root.classList.remove("has-lux-cursor", "lux-cursor-visible", "lux-cursor-active");

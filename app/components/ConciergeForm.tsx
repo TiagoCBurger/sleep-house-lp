@@ -48,7 +48,7 @@ export function ConciergeForm({
 
   return (
     <form
-      className="flex flex-col gap-8"
+      className="flex flex-col gap-7"
       action={formAction}
       data-lead-form
       data-form-origin={origin}
@@ -56,12 +56,12 @@ export function ConciergeForm({
       <PageUrlField />
       <input type="hidden" name="origem" value={origin} />
       <input type="hidden" name="success_path" value={successPath} />
-      <label className="flex flex-col gap-3">
+      <label className="flex flex-col gap-2.5">
         <span className="text-[9px] font-light uppercase tracking-[0.18em] text-[#f5f0e8]/30">
           Nome completo
         </span>
         <input
-          className="h-12 border-b border-[#f5f0e8]/15 bg-transparent pb-3 text-base italic text-[#f5f0e8] outline-none placeholder:text-[#f5f0e8]/20"
+          className="h-14 rounded-sm border border-white/15 bg-white/[.055] px-4 text-[15px] text-[#f5f0e8] outline-none transition placeholder:text-[#f5f0e8]/30 hover:border-[#c4a962]/45 focus:border-[#c4a962] focus:bg-white/[.08]"
           name="nome"
           placeholder="Seu nome"
           autoComplete="name"
@@ -79,12 +79,12 @@ export function ConciergeForm({
         </div>
       )}
 
-      <label className="flex flex-col gap-3">
+      <label className="flex flex-col gap-2.5">
         <span className="text-[9px] font-light uppercase tracking-[0.18em] text-[#f5f0e8]/30">
           WhatsApp
         </span>
         <input
-          className="h-12 border-b border-[#f5f0e8]/15 bg-transparent pb-3 text-base italic text-[#f5f0e8] outline-none placeholder:text-[#f5f0e8]/20"
+          className="h-14 rounded-sm border border-white/15 bg-white/[.055] px-4 text-[15px] text-[#f5f0e8] outline-none transition placeholder:text-[#f5f0e8]/30 hover:border-[#c4a962]/45 focus:border-[#c4a962] focus:bg-white/[.08]"
           name="whatsapp"
           placeholder="(00) 00000-0000"
           autoComplete="tel"
@@ -134,25 +134,11 @@ export function ConciergeForm({
         </div>
       </fieldset>}
 
-      <label className="flex flex-col gap-3">
+      <label className="flex flex-col gap-2.5">
         <span className="text-[9px] font-light uppercase tracking-[0.18em] text-[#f5f0e8]/30">
           {qualification ? "Qual loja fica mais perto de você?" : "Loja de preferência"}
         </span>
-        <select
-          className="h-12 border-b border-[#f5f0e8]/15 bg-[#0a0a0a] pb-3 text-base italic text-[#f5f0e8] outline-none"
-          name="loja_preferencia"
-          defaultValue=""
-          required
-        >
-          <option value="" disabled>
-            Selecione uma loja
-          </option>
-          {storeOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
+        <SelectControl name="loja_preferencia" placeholder="Selecione uma loja" options={storeOptions} />
       </label>
 
       <div className="pt-2">
@@ -182,19 +168,36 @@ function QuestionSelect({
   options: readonly string[];
 }) {
   return (
-    <label className="flex flex-col gap-3">
+    <label className="flex flex-col gap-2.5">
       <span className="min-h-7 text-[9px] font-light uppercase leading-[1.55] tracking-[0.15em] text-[#f5f0e8]/30">
         {label}
       </span>
+      <SelectControl name={name} placeholder="Selecione" options={options} />
+    </label>
+  );
+}
+
+function SelectControl({
+  name,
+  placeholder,
+  options,
+}: {
+  name: string;
+  placeholder: string;
+  options: readonly string[];
+}) {
+  return (
+    <span className="relative block">
       <select
         name={name}
         defaultValue=""
-        className="h-12 border-b border-[#f5f0e8]/15 bg-[#0a0a0a] pb-3 text-sm text-[#f5f0e8] outline-none"
+        className="h-14 w-full appearance-none rounded-sm border border-white/15 bg-white/[.055] px-4 pr-11 text-[13px] text-[#f5f0e8] outline-none transition hover:border-[#c4a962]/45 focus:border-[#c4a962] focus:bg-white/[.08]"
         required
       >
-        <option value="" disabled>Selecione</option>
+        <option value="" disabled>{placeholder}</option>
         {options.map((option) => <option key={option} value={option}>{option}</option>)}
       </select>
-    </label>
+      <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 grid w-11 place-items-center border-l border-white/10 text-[#c4a962]">⌄</span>
+    </span>
   );
 }

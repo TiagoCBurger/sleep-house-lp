@@ -62,8 +62,8 @@ export function VisitIntentPopup() {
           <h2 id="visit-popup-title" className="mt-5 max-w-[500px] font-display text-[38px] leading-[1.02] tracking-[-.035em] sm:text-[48px]">Seu corpo reconhece o colchão certo antes de qualquer ficha técnica.</h2>
           <p className="mt-5 max-w-[500px] text-sm font-light leading-[1.8] text-[#172B4D]/65">Agende uma experiência em Americana ou Piracicaba. Um especialista prepara as melhores opções para você comparar com calma.</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a href="#atendimento" onClick={() => setOpen(false)} data-cta="popup-agendar-visita" className="inline-flex min-h-13 items-center justify-center rounded-full bg-[#172B4D] px-6 text-[10px] font-semibold uppercase tracking-[.14em] text-white">Agendar minha visita</a>
-            <a href="#lojas" onClick={() => setOpen(false)} data-cta="popup-ver-lojas" className="inline-flex min-h-13 items-center justify-center rounded-full border border-[#172B4D]/25 px-6 text-[10px] font-semibold uppercase tracking-[.14em]">Ver endereços</a>
+            <a href="#atendimento" onClick={() => setOpen(false)} data-cta="popup-agendar-visita" className="inline-flex min-h-13 items-center justify-center rounded-full bg-[#CF9C00] px-6 text-[10px] font-bold uppercase tracking-[.14em] text-[#0B1F3A] shadow-[0_8px_18px_rgba(128,96,0,.22)] transition hover:bg-[#E8B900] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0B1F3A]">Agendar minha visita</a>
+            <a href="#lojas" onClick={() => setOpen(false)} data-cta="popup-ver-lojas" className="inline-flex min-h-13 items-center justify-center rounded-full border border-[#172B4D]/70 bg-[#FCFAF6] px-6 text-[10px] font-bold uppercase tracking-[.14em] text-[#172B4D] shadow-[0_8px_18px_rgba(23,43,77,.10)] transition hover:border-[#172B4D] hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0B1F3A]">Ver endereços</a>
           </div>
         </div>
       </section>
