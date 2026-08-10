@@ -13,6 +13,7 @@ import storefrontImage from "@/public/stores/sleep-house-fachada.jpg";
 import showroomImage from "@/public/stores/sleep-house-showroom.jpeg";
 import { ConciergeForm } from "./components/ConciergeForm";
 import { HomeHeader } from "./components/HomeHeader";
+import { HeroBackgroundVideo } from "./components/HeroBackgroundVideo";
 import { LuxuryMotion } from "./components/LuxuryMotion";
 import { VisitIntentPopup } from "./components/VisitIntentPopup";
 import { GENERAL_WHATSAPP_URL } from "./lib/constants";
@@ -155,20 +156,7 @@ export default function Home() {
       <VisitIntentPopup />
 
       <section id="hero" className="relative min-h-[850px] bg-[#0B1F3A] text-white lg:min-h-[760px]">
-        <video
-          className="absolute inset-0 size-full object-cover object-[64%_center] opacity-75 lg:object-center"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          poster="/home/hero-sleep-house.webp"
-          aria-hidden="true"
-          data-hero-media
-        >
-          <source src="/hero-timeline.webm" type="video/webm" />
-          <source src="/hero-timeline.mp4" type="video/mp4" />
-        </video>
+        <HeroBackgroundVideo />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(11,31,58,.97)_0%,rgba(11,31,58,.78)_38%,rgba(11,31,58,.16)_72%)]" />
         <div className="relative mx-auto flex min-h-[850px] max-w-[1440px] items-end px-5 pb-32 pt-32 sm:px-8 sm:pb-28 lg:min-h-[760px] lg:items-center lg:px-12 lg:pb-0">
           <div className="max-w-[700px]">

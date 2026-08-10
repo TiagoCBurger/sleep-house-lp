@@ -8,25 +8,40 @@ export function LuxuryMotion() {
 
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const connection = navigator as Navigator & {
+      connection?: { effectiveType?: string; saveData?: boolean };
+    };
     const supportsCursor =
       window.innerWidth >= 1024 &&
       window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const isLowPowerDevice =
+      connection.connection?.saveData ||
+      connection.connection?.effectiveType === "slow-2g" ||
+      connection.connection?.effectiveType === "2g" ||
+      (navigator.hardwareConcurrency > 0 && navigator.hardwareConcurrency <= 4) ||
+      ("deviceMemory" in navigator &&
+        typeof navigator.deviceMemory === "number" &&
+        navigator.deviceMemory <= 4);
 
-    if (reduceMotion.matches) return;
+    if (reduceMotion.matches || isLowPowerDevice) return;
 
     let cancelled = false;
+    let idleHandle: number | null = null;
     const cleanups: Array<() => void> = [];
     let revertContext = () => {};
     const root = document.documentElement;
 
-    if (supportsCursor) root.classList.add("has-lux-cursor");
+    const startMotion = () => {
+      if (supportsCursor) root.classList.add("has-lux-cursor");
 
-    void (async () => {
-      const [{ default: gsap }, { ScrollTrigger }, { default: Lenis }] = await Promise.all([
+      void (async () => {
+      const [gsapModule, scrollTriggerModule, lenisModule] = await Promise.all([
         import("gsap"),
         import("gsap/ScrollTrigger"),
-        import("lenis"),
+        supportsCursor ? import("lenis") : Promise.resolve(null),
       ]);
+      const gsap = gsapModule.default;
+      const { ScrollTrigger } = scrollTriggerModule;
 
       // React intentionally mounts, cleans up, and mounts effects again in
       // development. Do not attach GSAP listeners after the first effect has
@@ -66,8 +81,8 @@ export function LuxuryMotion() {
         });
       }
 
-      const lenis = supportsCursor
-        ? new Lenis({
+      const lenis = supportsCursor && lenisModule
+        ? new lenisModule.default({
             anchors: true,
             duration: 1.15,
             easing: (progress: number) => 1 - Math.pow(1 - progress, 4),
@@ -99,9 +114,8 @@ export function LuxuryMotion() {
         heroTimeline
           .from("[data-hero-media]", {
             autoAlpha: 0,
-            scale: 1.08,
-            filter: "blur(10px)",
-            duration: 1.45,
+            scale: 1.035,
+            duration: 1.15,
             ease: "power2.out",
           })
           .from(
@@ -119,7 +133,6 @@ export function LuxuryMotion() {
             autoAlpha: 0,
             y: 32,
             scale: 0.985,
-            filter: "blur(5px)",
             duration: 0.9,
             ease: "power3.out",
             scrollTrigger: {
@@ -189,7 +202,6 @@ export function LuxuryMotion() {
             const onPointerEnter = () => {
               gsap.to(element, {
                 scale: 1.018,
-                boxShadow: "0 18px 42px rgba(196, 169, 98, 0.13)",
                 duration: 0.45,
                 ease: "power3.out",
               });
@@ -200,7 +212,6 @@ export function LuxuryMotion() {
               moveY(0);
               gsap.to(element, {
                 scale: 1,
-                boxShadow: "0 0 0 rgba(196, 169, 98, 0)",
                 duration: 0.55,
                 ease: "power3.out",
               });
@@ -219,11 +230,30 @@ export function LuxuryMotion() {
       });
 
       revertContext = () => ctx.revert();
-      ScrollTrigger.refresh();
-    })();
+        ScrollTrigger.refresh();
+      })();
+    };
+
+    const idleWindow = window as unknown as {
+      requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+
+    if (idleWindow.requestIdleCallback) {
+      idleHandle = idleWindow.requestIdleCallback(startMotion, { timeout: 900 });
+    } else {
+      idleHandle = window.setTimeout(startMotion, 450);
+    }
 
     return () => {
       cancelled = true;
+      if (idleHandle !== null) {
+        if (idleWindow.cancelIdleCallback) {
+          idleWindow.cancelIdleCallback(idleHandle);
+        } else {
+          window.clearTimeout(idleHandle);
+        }
+      }
       cleanups.forEach((cleanup) => cleanup());
       revertContext();
       root.classList.remove("has-lux-cursor", "lux-cursor-visible", "lux-cursor-active");
