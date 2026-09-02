@@ -33,18 +33,49 @@ const timingOptions = [
   "Apenas pesquisando preços",
 ] as const;
 
+const homeCareForOptions = [
+  "Mim",
+  "Pai, mãe ou idoso(a)",
+  "Pessoa acamada",
+  "Pessoa com mobilidade reduzida",
+  "Outro",
+] as const;
+
+const homeCareNeedOptions = [
+  "Conforto",
+  "Muito tempo na cama",
+  "Mobilidade",
+  "Renovação do colchão",
+  "Conhecer Tempur",
+  "Outro",
+] as const;
+
+const investmentOptions = [
+  "Até R$ 1.500",
+  "R$ 1.500–4.000",
+  "R$ 4.000–10.000",
+  "Acima de R$ 10.000",
+] as const;
+
 export function ConciergeForm({
   origin = "Landing Page Sleep House Dedicace Paris",
   qualification = false,
   successPath = "/obrigado",
+  variant = "default",
+  submitLabel,
+  helperText = "Atendimento personalizado · Sem compromisso de compra",
 }: {
   origin?: string;
   qualification?: boolean;
-  successPath?: "/obrigado" | "/encontre-seu-colchao-ideal-typ";
+  successPath?: "/obrigado" | "/encontre-seu-colchao-ideal-typ" | "/tempur-home-care/obrigado";
+  variant?: "default" | "homeCare";
+  submitLabel?: string;
+  helperText?: string;
 }) {
   const [state, formAction] = useActionState(submitConciergeForm, {
     error: "",
   });
+  const isHomeCare = variant === "homeCare";
 
   return (
     <form
@@ -56,6 +87,12 @@ export function ConciergeForm({
       <PageUrlField />
       <input type="hidden" name="origem" value={origin} />
       <input type="hidden" name="success_path" value={successPath} />
+      {isHomeCare && (
+        <>
+          <input type="hidden" name="perfil" value="Home Care" />
+          <input type="hidden" name="loja_preferencia" value="A definir com a consultoria" />
+        </>
+      )}
       <label className="flex flex-col gap-2.5">
         <span className="text-[9px] font-light uppercase tracking-[0.18em] text-[#f5f0e8]/30">
           Nome completo
@@ -95,6 +132,26 @@ export function ConciergeForm({
         />
       </label>
 
+      {isHomeCare && (
+        <div className="grid gap-7 sm:grid-cols-2">
+          <label className="flex flex-col gap-2.5">
+            <span className="min-h-7 text-[9px] font-light uppercase leading-[1.55] tracking-[0.15em] text-[#f5f0e8]/30">
+              Cidade
+            </span>
+            <input
+              className="h-14 rounded-sm border border-white/15 bg-white/[.055] px-4 text-[15px] text-[#f5f0e8] outline-none transition placeholder:text-[#f5f0e8]/30 hover:border-[#c4a962]/45 focus:border-[#c4a962] focus:bg-white/[.08]"
+              name="cidade"
+              placeholder="Americana, Piracicaba ou região"
+              autoComplete="address-level2"
+              required
+            />
+          </label>
+          <QuestionSelect name="para_quem" label="Para quem é o atendimento?" options={homeCareForOptions} />
+          <QuestionSelect name="necessidade" label="Qual é a principal necessidade?" options={homeCareNeedOptions} />
+          <QuestionSelect name="faixa_investimento" label="Faixa de investimento considerada" options={investmentOptions} />
+        </div>
+      )}
+
       <label className="flex cursor-pointer items-start gap-3 text-[11px] font-light leading-[1.65] text-[#f5f0e8]/45">
         <input
           type="checkbox"
@@ -111,7 +168,7 @@ export function ConciergeForm({
         </span>
       </label>
 
-      {!qualification && <fieldset className="border-0 p-0">
+      {!qualification && !isHomeCare && <fieldset className="border-0 p-0">
         <legend className="mb-4 text-[9px] font-light uppercase tracking-[0.18em] text-[#f5f0e8]/30">
           Perfil
         </legend>
@@ -134,18 +191,18 @@ export function ConciergeForm({
         </div>
       </fieldset>}
 
-      <label className="flex flex-col gap-2.5">
+      {!isHomeCare && <label className="flex flex-col gap-2.5">
         <span className="text-[9px] font-light uppercase tracking-[0.18em] text-[#f5f0e8]/30">
           {qualification ? "Qual loja fica mais perto de você?" : "Loja de preferência"}
         </span>
         <SelectControl name="loja_preferencia" placeholder="Selecione uma loja" options={storeOptions} />
-      </label>
+      </label>}
 
       <div className="pt-2">
-        <SubmitButton />
+        <SubmitButton label={submitLabel} />
 
         <p className="mt-4 text-center text-[11px] font-light tracking-[0.04em] text-[#f5f0e8]/20">
-          Atendimento personalizado · Sem compromisso de compra
+          {helperText}
         </p>
 
         {state.error && (

@@ -7,6 +7,18 @@ export type ConciergeFormState = {
   error: string;
 };
 
+const allowedSuccessPaths = [
+  "/obrigado",
+  "/encontre-seu-colchao-ideal-typ",
+  "/tempur-home-care/obrigado",
+] as const;
+
+type ConciergeSuccessPath = (typeof allowedSuccessPaths)[number];
+
+function resolveSuccessPath(value: string): ConciergeSuccessPath {
+  return allowedSuccessPaths.find((path) => path === value) ?? "/obrigado";
+}
+
 export async function submitConciergeForm(
   _previousState: ConciergeFormState,
   formData: FormData,
@@ -22,6 +34,10 @@ export async function submitConciergeForm(
   const tamanho = String(formData.get("p2_tamanho") ?? "").trim();
   const conforto = String(formData.get("p3_conforto") ?? "").trim();
   const prazo = String(formData.get("p4_prazo") ?? "").trim();
+  const cidade = String(formData.get("cidade") ?? "").trim();
+  const paraQuem = String(formData.get("para_quem") ?? "").trim();
+  const necessidade = String(formData.get("necessidade") ?? "").trim();
+  const faixaInvestimento = String(formData.get("faixa_investimento") ?? "").trim();
   const consentimentoLgpd = String(formData.get("consentimento_lgpd") ?? "").trim();
 
   try {
@@ -37,6 +53,10 @@ export async function submitConciergeForm(
       tamanho,
       conforto,
       prazo,
+      cidade,
+      para_quem: paraQuem,
+      necessidade,
+      faixa_investimento: faixaInvestimento,
       consentimento_lgpd: consentimentoLgpd,
     });
   } catch (error) {
@@ -48,9 +68,5 @@ export async function submitConciergeForm(
     };
   }
 
-  redirect(
-    successPath === "/encontre-seu-colchao-ideal-typ"
-      ? successPath
-      : "/obrigado",
-  );
+  redirect(resolveSuccessPath(successPath));
 }

@@ -16,6 +16,10 @@ export type ConciergePayload = {
   tamanho?: string;
   conforto?: string;
   prazo?: string;
+  cidade?: string;
+  para_quem?: string;
+  necessidade?: string;
+  faixa_investimento?: string;
   consentimento_lgpd?: string;
 };
 
@@ -25,6 +29,7 @@ export function onlyDigits(value: string) {
 
 export function isValidConciergePayload(payload: ConciergePayload) {
   const isGeneralLanding = payload.origem.includes("Americana e Piracicaba");
+  const isTempurHomeCare = payload.origem === "LP Tempur Home Care";
   const hasQualification =
     !isGeneralLanding ||
     Boolean(
@@ -32,6 +37,14 @@ export function isValidConciergePayload(payload: ConciergePayload) {
         payload.tamanho?.trim() &&
         payload.conforto?.trim() &&
         payload.prazo?.trim(),
+    );
+  const hasHomeCareQualification =
+    !isTempurHomeCare ||
+    Boolean(
+      payload.cidade?.trim() &&
+        payload.para_quem?.trim() &&
+        payload.necessidade?.trim() &&
+        payload.faixa_investimento?.trim(),
     );
 
   return (
@@ -41,7 +54,8 @@ export function isValidConciergePayload(payload: ConciergePayload) {
     payload.perfil.trim().length > 0 &&
     payload.loja_preferencia.trim().length > 0 &&
     payload.consentimento_lgpd === "sim" &&
-    hasQualification
+    hasQualification &&
+    hasHomeCareQualification
   );
 }
 
